@@ -1,0 +1,321 @@
+import processing.core.PApplet;
+public class Main extends PApplet {
+    int trainX = 0; // posisi X Kereta
+    int[] dropsX; //  posisi X setiap tetesan air
+    int[] dropsY; // posisi Y setiap tetesan air
+    int totalDrops = 500; // Jumlah total tetesan air
+    int orang1 = 50; // Posisi awal X orang di pojok kiri
+    int orang2 = 650; // Posisi Y orang
+
+    @Override
+    public void settings() {
+        size(1400, 750);
+    }
+    public void setup() {
+        dropsX = new int[totalDrops];
+        dropsY = new int[totalDrops];
+        for (int i = 0; i < totalDrops; i++) {
+            dropsX[i] = (int) random(width); // Inisialisasi posisi X secara acak
+            dropsY[i] = (int) random(-500, -10); // Inisialisasi posisi Y secara acak di atas layar
+        }
+    }
+
+    @Override
+    public void draw() {
+        System.out.println(frameRateLastNanos);
+        pagi();
+        delay(100);
+        fill(64, 61, 55);
+        rect(0, 510, 1400, 300);
+        fill(5, 5, 5);
+        rect(0, 500, 1400, 10);
+        rect(0, 650, 1400, 10);
+        noStroke();
+        drawTrees();
+        stroke(5,5,5);
+        strokeWeight(5);
+        drawTrainTracks();
+        stroke(5,5,5);
+        strokeWeight(3);
+        fill(194, 192, 143); // Warna orang
+        ellipse(orang1, 500, 100, 100); // Gambar orang
+        rect(orang1 - 40, 550, 80, 175, 5); //badan
+        fill(1, 46, 94);
+        rect(orang1 - 40, 550, 80, 175, 5); //baju
+        fill(194, 192, 143);
+        rect(orang1 - 60, 550, 30, 100, 15); //tangan kiri
+        rect(orang1 + 30, 550, 40, 30, 15); //lengan kanan
+        rect(orang1 + 55, 500, 30, 80, 15); //tangan kanan
+        noStroke();
+        fill(1, 46, 94);
+        rect(orang1 - 60, 550, 30, 40, 15);
+        rect(orang1 + 30, 550, 35, 30, 15);
+
+        // Gerakkan orang dari kiri ke tengah
+        if (orang1 < width / 4) { // Posisi tengah layar
+            orang1 += 100; // Ubah posisi X untuk bergerak ke kanan
+        }
+    }
+    public void drawFilkomText() {
+        stroke(255); // Warna garis
+        strokeWeight(4); // Ketebalan garis
+        // F
+        line(1030, 200, 1030, 220);
+        line(1030, 200, 1040, 200);
+        line(1030, 210, 1040, 210);
+        // I
+        line(1055, 200, 1055, 220);
+        // L
+        line(1080, 200, 1080, 220);
+        line(1080, 220, 1090, 220);
+        // K
+        line(1110, 200, 1110, 220);
+        line(1110, 210, 1120, 200);
+        line(1110, 210, 1120, 220);
+        // O
+        ellipse(1145, 210, 20, 20);
+        // M
+        line(1170, 200, 1170, 220);
+        line(1170, 200, 1178, 210);
+        line(1178, 210, 1186, 200);
+        line(1186, 200, 1186, 220);
+        // K
+        line(1030, 250, 1030, 270);
+        line(1030, 260, 1040, 250);
+        line(1030, 260, 1040, 270);
+        // E
+        line(1053, 250, 1053, 270);
+        line(1053, 250, 1062, 250);
+        line(1053, 260, 1062, 260);
+        line(1053, 270, 1062, 270);
+        //N
+        line(1077, 250, 1077, 270);
+        line(1077, 250, 1087, 270);
+        line(1087, 250, 1087, 270);
+        // C
+        line(1103, 250, 1103, 270);
+        line(1103, 250, 1113, 250);
+        line(1103, 270, 1113, 270);
+        //A
+        line(1130, 250, 1123, 270);
+        line(1130, 260, 1133, 260);
+        line(1130, 250, 1139, 270);
+        //N
+        line(1151, 250, 1151, 270);
+        line(1151, 250, 1163, 270);
+        line(1163, 250, 1163, 270);
+        //A
+        line(1182, 250, 1175, 270);
+        line(1182, 260, 1185, 260);
+        line(1182, 250, 1190, 270);
+
+    }
+    private void drawTrees() {
+        fill(139, 69, 19); // Warna batang pohon
+        for (int i = 0; i < width; i += 350) {
+            rect(i + 465, 400, 20, 100); // Batang pohon 1
+            rect(115, 400, 20, 100); // Batang pohon kiri
+        }
+        fill(34, 139, 34); // Warna daun pohon
+        for (int i = 0; i < width; i += 350) {
+            ellipse(i + 95, 340, 80, 80); // Daun pohon 1
+            ellipse(i + 155, 340, 80, 80); // Daun pohon 1
+            ellipse(i + 160, 380, 80, 80); // Daun pohon 1
+            ellipse(i + 90, 380, 80, 80); // Daun pohon 1
+        }
+    }
+    private void drawTrainTracks() {
+        fill(150);
+        for (int i = 0; i < width; i += 40) {
+            rect(i, 520, 20, 120); // Rel utama
+            rect(i + 20, 540, 20, 10); // Bagian penopang rel atas
+            rect(i + 20, 600, 20, 10); // Bagian penopang rel bawah
+        }
+        // Gambar kereta
+        fill(183, 94, 242); // Warna untuk kereta
+        rect(trainX, 360, 600, 250, 28); // Gambar kereta di atas rel
+
+        fill(183, 94, 242); // Warna Jendela
+        for (int i = 0; i < 3; i++) {
+            rect(trainX - 700, 360, 600, 250, 28);
+        }
+
+        // Gambar jendela di kereta
+        fill(200); // Warna jendela
+        for (int i = 0; i < 3; i++) {
+            rect(trainX + 15 + i * 30, 400, 300, 120); // Jendela
+            rect(trainX + 420 + i * 30, 400, 120, 120);
+            rect(trainX - 700 + i * 30, 400, 300, 120); // Jendela 2
+            rect(trainX - 300 + i * 30, 400, 120, 120);
+            rect(trainX + 520 + i * 10, 310, 15, 50); // Corong
+        }
+
+        fill(5, 5, 5); // Window color
+        for (int i = 0; i < 3; i++) {
+            ellipse(trainX + 550, 600, 50, 50); // roda1
+            ellipse(trainX + 500, 600, 50, 50);
+            ellipse(trainX + 300, 600, 50, 50);
+            ellipse(trainX + 250, 600, 50, 50);
+            ellipse(trainX + 100, 600, 50, 50);
+            ellipse(trainX + 50, 600, 50, 50);
+            ellipse(trainX - 650, 600, 50, 50); // roda2
+            ellipse(trainX - 600, 600, 50, 50);
+            ellipse(trainX - 400, 600, 50, 50);
+            ellipse(trainX - 350, 600, 50, 50);
+            ellipse(trainX - 200, 600, 50, 50);
+            ellipse(trainX - 150, 600, 50, 50);
+            rect(trainX - 100, 550, 100, 30); // pengait gerbong
+        }
+        fill(5, 5, 5);
+        rect(1100, 200, 30, 500);
+        rect(650, 550, 500, 30);
+        fill(255, 226, 3);
+        rect(1100, 500, 30, 100);
+        rect(1100, 300, 30, 100);
+        rect(950, 550, 100, 30);
+        rect(750, 550, 100, 30);
+        fill(242, 2, 2);
+        ellipse(1070, 400, 50, 50);
+        ellipse(1160, 400, 50, 50);
+        noStroke();
+        fill(4, 59, 4); // Papan filkom
+        rect(1010,190,200,110);
+        drawFilkomText();
+
+        trainX += 20; // Gerakan kereta ke kanan
+
+        // Setel ulang posisi kereta saat keluar dari layar
+        if (trainX > width) {
+            trainX = -120;
+        }
+    }
+    int xs = -120, ys = 275;
+    public void sunmoon() {
+        if (xs <= 300) {
+            fill(28, 28, 28);
+            rect(250, 200, 200, 300); // Gedung
+            rect(150, 300, 150, 200);
+            rect(500, 100, 200, 400);
+            quad(700, 500, 750, 500, 750, 70, 700, 100); // Sisi gedung 1
+            quad(200, 500, 258, 500, 250, 200, 200, 149); // Sisi kiri gedung 2
+            quad(110, 500, 158, 500, 150, 300, 110, 269); // Sisi kiri gedung 3
+            quad(500, 100, 700, 100, 750, 70, 550, 70); // Atap gedung 1
+            quad(250, 200, 450, 200, 380, 150, 200, 150); // Atap gedung 2
+            quad(150, 300, 300, 300, 240, 270, 110, 270); // Atap gedung 3
+            for (int i = 0; i < totalDrops; i++) {
+                // Gambar setiap tetesan air
+                fill(150, 150, 255); // Warna tetesan air
+                ellipse(dropsX[i], dropsY[i], 2, 10); // Gambar tetesan air
+                dropsY[i] += 100; // Mengatur kecepatan jatuhnya hujan
+            }
+            fill(250, 238, 5); // Window color
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 3; j++) {
+                    rect(390, 220 + j * 80, 40, 40); // Jendela gedung 1 baris ke-1
+                    rect(330, 220 + j * 80, 40, 40); // Jendela gedung 1 baris ke-2
+                    rect(270, 220, 40, 40); // Jendela gedung 1 baris ke-3
+                    rect(158 + i * 50, 320 + j * 60, 30, 30); // Jendela gedung 2
+                    rect(520 + i * 60, 150 + j * 80, 40, 40);
+                }
+            }
+        } else if (xs <= 1200) {
+            fill(150, 204, 124);
+            rect(250, 200, 200, 300);
+            quad(700, 500, 750, 500, 750, 70, 700, 100); // Sisi gedung 1
+            quad(110, 500, 158, 500, 150, 300, 110, 269); // Sisi kiri gedung 3
+            fill(245, 229, 213);
+            quad(200, 500, 258, 500, 250, 200, 200, 149); // Sisi kiri gedung 2
+            fill(117, 94, 56);
+            rect(150, 300, 150, 200);
+            rect(500, 100, 200, 400);
+            fill(54, 47, 40);
+            quad(500, 100, 700, 100, 750, 70, 550, 70); // Atap gedung 1
+            quad(250, 200, 450, 200, 380, 150, 200, 150); // Atap gedung 2
+            quad(150, 300, 300, 300, 240, 270, 110, 270); // Atap gedung 3
+            fill(200); // Warna jendela
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 3; j++) {
+                    rect(390, 220 + j * 80, 40, 40); // Jendela gedung 1 baris ke-1
+                    rect(330, 220 + j * 80, 40, 40); // Jendela gedung 1 baris ke-2
+                    rect(270, 220, 40, 40); // Jendela gedung 1 baris ke-3
+                    rect(158 + i * 50, 320 + j * 60, 30, 30); // jendela gedung 2
+                    rect(520 + i * 60, 150 + j * 80, 40, 40);
+                }
+            }
+        } else {
+            fill(28, 28, 28);
+            rect(250, 200, 200, 300); // Gedung
+            rect(150, 300, 150, 200);
+            rect(500, 100, 200, 400);
+            quad(700, 500, 750, 500, 750, 70, 700, 100); // Sisi kanan gedung 1
+            quad(200, 500, 258, 500, 250, 200, 200, 149); // Sisi kiri gedung 2
+            quad(110, 500, 158, 500, 150, 300, 110, 269); // Sisi kiri gedung 3
+            quad(500, 100, 700, 100, 750, 70, 550, 70); // Atap gedung 1
+            quad(250, 200, 450, 200, 380, 150, 200, 150); // Atap gedung 2
+            quad(150, 300, 300, 300, 240, 270, 110, 270); // Atap gedung 3
+
+            for (int i = 0; i < totalDrops; i++) {
+                // Gambar setiap tetesan air
+                fill(150, 150, 255); // Warna tetesan air
+                ellipse(dropsX[i], dropsY[i], 2, 10); // Gambar tetesan air
+                dropsY[i] += 100; // Mengatur kecepatan jatuhnya hujan
+                if (dropsY[i] > height) {
+                    dropsY[i] = (int) random(-500, -10);
+                    dropsX[i] = (int) random(width);
+                }
+            }
+            fill(250, 238, 5); // Window color
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 3; j++) {
+                    rect(390, 220 + j * 80, 40, 40); // Jendela gedung 1 baris ke-1
+                    rect(330, 220 + j * 80, 40, 40); // Jendela gedung 1 baris ke-2
+                    rect(270, 220, 40, 40); // Jendela gedung 1 baris ke-3
+                    rect(158 + i * 50, 320 + j * 60, 30, 30); // Jendela gedung 2
+                    rect(520 + i * 60, 150 + j * 80, 40, 40);
+                }
+            }
+        }
+        if (xs < 500) {
+            fill(145, 142, 141);
+            ellipse(xs += 25, ys -= 10, 75, 75);
+        } else if (xs < 650) {
+            fill(255, 255, 0);
+            ellipse(xs += 25, ys -= 5, 75, 75);
+        } else if (xs < 700) {
+            fill(255, 255, 0);
+            ellipse(xs += 25, ys, 75, 75);
+        } else if (xs < 1000) {
+            fill(255, 255, 0);
+            ellipse(xs += 25, ys += 5, 75, 75);
+        } else {
+            fill(255, 255, 0);
+            ellipse(xs += 25, ys += 10, 75, 75);
+        }
+        if (xs >= 1450) {
+            xs = -120;
+            ys = 275;
+        }
+
+    }
+    public void pagi() {
+        if (xs <= 300) {
+            background(24, 34, 71);
+        } else if (xs <= 500) {
+            background(25, 64, 255);
+        } else if (xs <= 800) {
+            background(179, 255, 255);
+        } else if (xs <= 1200) {
+            background(255, 128, 0);
+        } else {
+            background(53, 54, 42);
+        }
+        noStroke();
+        sunmoon();
+    }
+    public static void main(String[] args) {
+        String judul = "Kereta Kencana";
+        String[] processingArgs = {judul};
+        Main mySketch = new Main();
+        PApplet.runSketch(processingArgs, mySketch);
+    }
+}
